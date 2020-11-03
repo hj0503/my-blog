@@ -42,8 +42,8 @@ copy:
 # formal:
 #   icon: link || the description
 social:
-  # fab fa-github: https://github.com/xxxxx || Github
-  # fas fa-envelope: mailto:xxxxxx@gmail.com || Email
+  fab fa-github: https://github.com/hj0503 || Github
+  fas fa-envelope: devinhj@163.com || Email
 
 # search (搜索)
 # --------------------------------------
@@ -84,7 +84,7 @@ favicon: /img/favicon.png
 
 # Avatar (頭像)
 avatar:
-  img:
+  img: /images/avatar.jpeg
   effect: false
 
 # The banner image of home page
@@ -578,7 +578,7 @@ hr_icon:
 
 # the subtitle on homepage (主頁subtitle)
 subtitle:
-  enable: false
+  enable: true
   # Typewriter Effect (打字效果)
   effect: true
   # loop (循環打字)
@@ -596,6 +596,7 @@ subtitle:
   # 開頭不允許轉義字元，如需要，請把整個句子用雙引號包住
   # 如果關閉打字效果，subtitle只會顯示sub的第一行文字
   sub:
+    - 不要害怕生命中不完美的角落，阳光在每个裂缝中散落
 
 # Loading Animation (加載動畫)
 preloader: false
@@ -611,13 +612,13 @@ aside:
   position: left # left or right
   card_author:
     enable: true
-    description:
+    description: 天黑终究会天亮
     button:
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/hj0503
   card_announcement:
-    enable: true
+    enable: false
     content: This is my Blog
   card_recent_post:
     enable: true
