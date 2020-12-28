@@ -25,3 +25,8 @@ categories: vue
 - 单文件组合式 API 语法糖`<script setup>`
 - 单文件组件状态驱动的 css 变量`<script vars>`
 - 单文件组件`<style scoped>`现在可以包含全局规则或只针对插槽内容的规则
+
+### 代码测试
+```javascript
+hh
+```
