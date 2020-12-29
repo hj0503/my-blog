@@ -1,10 +1,11 @@
 ---
-title: "vue3.0"
+title: vue3.0使用篇
 date: 2020-12-05 21:02:06
 tags:
   - vue
   - 前端
 categories: vue
+cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDjuVxdic6Pia3Aa5BSglRDlDFPLJM00tvkN1N565e2j3c4hjQib7Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1
 ---
 
 ### 一、vue3.0 重要的优化
@@ -27,6 +28,7 @@ categories: vue
 - 单文件组件`<style scoped>`现在可以包含全局规则或只针对插槽内容的规则
 
 ### 代码测试
+
 ```javascript
-hh
+hh;
 ```
