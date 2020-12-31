@@ -9,3 +9,4 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 ---
 
 ### Composition API
+### Proxy
