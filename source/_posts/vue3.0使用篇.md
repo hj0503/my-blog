@@ -45,4 +45,14 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - `watch`选项和`$watch`不再支持点分隔符字符串路径, 使用计算函数作为其参数
 
 ### Composition API
+#### 为什么需要Composition API
+#### Composition API几大要点
+- ref
+- reactive
+- watch & watchEffect
+- computed
+- 生命周期钩子
+- 模块化
 
+### Suspense
+### Teleport
