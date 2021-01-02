@@ -43,3 +43,6 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - 特性强制策略变更
 - 自定义指令API和组件一致
 - `watch`选项和`$watch`不再支持点分隔符字符串路径, 使用计算函数作为其参数
+
+### Composition API
+
