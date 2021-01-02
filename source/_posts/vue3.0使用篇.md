@@ -30,23 +30,26 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 ### 破坏性变化
 
 - Global API 改为应用程序实例调用
-- Global and internal APIs重构为可做摇树优化
+- Global and internal APIs 重构为可做摇树优化
 - `model`选项和`v-bind`的`sync`修饰符被移除，统一为`v-model`参数形式
-- 渲染函数API修改
+- 渲染函数 API 修改
 - 函数式组件仅能通过简单函数方式创建
-- 废弃在SFC的template上使用functional或者添加functional选项的方式声明函数式组件
+- 废弃在 SFC 的 template 上使用 functional 或者添加 functional 选项的方式声明函数式组件
 - 异步组件要求使用`defineAsyncComponent`方法创建
-- 组件data选项应该总是声明为函数
+- 组件 data 选项应该总是声明为函数
 - 自定义组件白名单执行于编译时
 - `is`属性仅限于用在`component`标签上
 - `$scopedSlots`属性被移除，都用`$slots`代替
 - 特性强制策略变更
-- 自定义指令API和组件一致
+- 自定义指令 API 和组件一致
 - `watch`选项和`$watch`不再支持点分隔符字符串路径, 使用计算函数作为其参数
 
 ### Composition API
-#### 为什么需要Composition API
-#### Composition API几大要点
+
+#### 为什么需要 Composition API
+
+#### Composition API 几大要点
+
 - ref
 - reactive
 - watch & watchEffect
@@ -55,4 +58,5 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - 模块化
 
 ### Suspense
+
 ### Teleport
