@@ -8,14 +8,14 @@ categories: vue
 cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDjuVxdic6Pia3Aa5BSglRDlDFPLJM00tvkN1N565e2j3c4hjQib7Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1
 ---
 
-### 一、vue3.0 重要的优化
+## 一、vue3.0 重要的优化
 
 - 模板编译速度的提升，对静态数据的跳过处理
 - 对数组的监控
 - 对 ts 有了很好的支持
 - 对 2.x 版本的完全兼容
 
-### 二、值得注意的新特性
+## 二、值得注意的新特性
 
 - 组合式(Composition) API
 - Teleport
@@ -27,7 +27,7 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - 单文件组件状态驱动的 css 变量`<script vars>`
 - 单文件组件`<style scoped>`现在可以包含全局规则或只针对插槽内容的规则
 
-### 破坏性变化
+## 破坏性变化
 
 - Global API 改为应用程序实例调用
 - Global and internal APIs 重构为可做摇树优化
@@ -44,12 +44,16 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - 自定义指令 API 和组件一致
 - `watch`选项和`$watch`不再支持点分隔符字符串路径, 使用计算函数作为其参数
 
-### Composition API
+## Composition API
 
-#### 为什么需要 Composition API
+### 为什么需要 Composition API
 
-#### Composition API 几大要点
+> 1. 更好的逻辑复用以及代码组织
+> 2. 更好的类型推断
 
+### Composition API 几大要点
+
+- setup
 - ref
 - reactive
 - watch & watchEffect
@@ -57,6 +61,177 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 - 生命周期钩子
 - 模块化
 
-### Suspense
+#### 1、setup
 
-### Teleport
+- 调用动机
+  创建组件实例，然后初始化`props`，紧接着就调用`setup`函数。从生命周期钩子的视角来看，它会在`beforeCreate`钩子之前被调用
+- 有两个可选参数
+  - props - 属性
+  - context - 上下文对象，用于代替以前的 this
+
+#### 2、reactive
+
+接收一个普通对象然后返回该普通对象的响应式代理
+
+```javascript
+setup() {
+  const obj = reactive({
+    name: "张三",
+    age: 24,
+  });
+  function addAge() {
+    obj.age++;
+  }
+  return {
+    obj, // 在template中需要obj来获取来调取 {{ obj.name }}
+    ...obj, // 不能使用扩展运算符，会失去响应式
+    ...toRefs(obj), // 将响应式数据对象转换为单一响应式对象
+    addAge
+  };
+},
+```
+
+#### 3、ref
+
+接受一个参数值并返回一个响应式且可改变的 ref 对象。ref 对象拥有一个指向内部值的单一属性`.value`
+
+```javascript
+setup() {
+  const count = ref(0);
+  function addCount() {
+    count.value++;
+  }
+  return { count, addCount } // 在模板中使用不需要.value，会自动解构
+},
+```
+
+> 如果传入 ref 的是一个对象，将调用 reactive 方法进行深层响应转换
+
+#### 4、选择 reactive 还是 ref
+
+通过基本类型声明状态使用 ref，引用类型声明状态使用 reactive
+
+```javascript
+setup() {
+  // 通过引用类型声明状态
+  const pos = reactive({ x: 0, y: 0 })
+  function mousePosition(e) {
+    pos.x = e.pageX
+    pos.y = e.pageY
+  }
+  // 通过基本类型声明状态
+  const xRef = ref(0)
+  const yRef = ref(0)
+  function mousePosition(e) {
+    xRef.value = e.pageX
+    xRef.value = e.pageY
+  }
+}
+```
+
+#### 5、computed
+
+与 vue2.x 类似，可以定义可更改的计算属性
+
+```javascript
+setup() {
+  const count = ref(1);
+  // 传入一个 getter 函数，返回一个默认不可手动修改的 ref 对象
+  const plusOne = computed(() => {
+    return count + 1
+  })
+
+  // 传入一个拥有 get 和 set 函数的对象，创建一个可手动修改的计算状态
+  const plusOne = computed({
+    get: () => count.value + 1,
+    set: (val) => {
+      count.value = val - 1;
+    },
+  });
+  plusOne.value = 1;
+  return { plusOne }
+},
+```
+
+#### 6、watch & watchEffect
+
+```javascript
+setup() {
+  const count = ref(0);
+  const count1 = ref(1);
+
+  // watchEffect传入的函数中所依赖的响应式对象监听
+  watchEffect(() => {
+    console.log(count.value);
+  });
+
+  // 指定响应式对象监听，第一次绑定时不会执行
+  watch(count, (newVal, oldVal) =>
+    console.log("watch count", newVal, oldVal)
+  ); // 打印0
+
+  // 指定响应式对象监听，第一次绑定时执行
+  watch(
+    count,
+    (newVal, oldVal) => {
+      console.log("watch count:", newVal, oldVal);
+    },
+    {
+      immediate: true,
+    }
+  );
+
+  // 多响应式对象监听
+  watch([count, count1], ([newCount, newCount1], [oldCount, oldCount1]) => {
+    console.log("watch count:", newCount, newCount1, oldCount, oldCount1);
+  });
+
+  setTimeout(() => {
+    count.value++; // 打印1
+  }, 3000);
+},
+```
+
+> 当 watch 函数不传指定的响应式对象时，效果和 watchEffect 一样
+
+#### 7、生命周期钩子
+
+- 与 2.x 版本生命周期相对应的组合式 API
+  | Vue2 | Vue3 |
+  | ---- | ---- |
+  | ~~beforeCreate~~ | setup |
+  | ~~created~~ | setup |
+  | beforeMount | onBeforeMount |
+  | mounted | onMounted |
+  | beforeUpdate | onBeforeUpdate |
+  | updated | onUpdated |
+  | beforeDestroy | onBeforeUnmount |
+  | destroyed | onUnmounted |
+  | errorCaptured | onErrorCaptured |
+  | | onRenderTracked |
+  | | onRenderTriggered |
+- 进行`Vue2.x`和`Vue3.x`混用时，生命周期函数执行顺序
+
+  ```javascript
+  1. setup
+  2. beforeCreate
+  3. data
+  4. created
+  5. onBeforeMount
+  6. beforeMount
+  7. onMounted
+  8. mounted
+  9. onBeforeUpdate
+  10. beforeUpdate
+  11. onUpdated
+  12. updated
+  13. onBeforeUnmount
+  14. beforeDestroy
+  15. onUnmounted
+  16. destroyed
+  ```
+> `Vue3.x`的生命周期函数会比相对应的`Vue2.x`的先执行
+> `Vue2.x`中，写多个同样的生命周期函数，后面的会覆盖前面的，`Vue3.x`中，写多个同样的生命周期函数，会依次执行
+
+
+
