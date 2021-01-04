@@ -8,14 +8,14 @@ categories: vue
 cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDjuVxdic6Pia3Aa5BSglRDlDFPLJM00tvkN1N565e2j3c4hjQib7Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1
 ---
 
-## vue3.0 重要的优化
+## 一、vue3.0 重要的优化
 
 - 模板编译速度的提升，对静态数据的跳过处理
 - 对数组的监控
 - 对 ts 有了很好的支持
 - 对 2.x 版本的完全兼容
 
-## Composition API
+## 二、Composition API
 
 ### 为什么需要 Composition API
 
@@ -292,31 +292,67 @@ export default {
 </script>
 ```
 
-## 值得注意的新特性
+## 三、Teleport - 传送门
 
-- 组合式(Composition) API
-- Teleport
-- 可以有多个根节点(Fragments)
-- 片段
-- 触发组件选项
-- `createRenderer`API 创建自定义渲染器
-- 单文件组合式 API 语法糖`<script setup>`
-- 单文件组件状态驱动的 css 变量`<script vars>`
-- 单文件组件`<style scoped>`现在可以包含全局规则或只针对插槽内容的规则
+将指定的模板节点渲染到特定的容器上，非常有助于实现 modal、toast 等全局模块
+`Teleport`具有一个必需的属性`to`,可以是：
 
-## 破坏性变化
+- 元素的 ID `<teleport to="#id">`
+- 元素的 class `<teleport to=".class">`
+- data 选择器 `<teleport to="[data-modal]">`
+- 响应式查询字符串 `<teleport :to="reactiveProperty">`
 
-- Global API 改为应用程序实例调用
-- Global and internal APIs 重构为可做摇树优化
-- `model`选项和`v-bind`的`sync`修饰符被移除，统一为`v-model`参数形式
-- 渲染函数 API 修改
-- 函数式组件仅能通过简单函数方式创建
-- 废弃在 SFC 的 template 上使用 functional 或者添加 functional 选项的方式声明函数式组件
-- 异步组件要求使用`defineAsyncComponent`方法创建
-- 组件 data 选项应该总是声明为函数
-- 自定义组件白名单执行于编译时
-- `is`属性仅限于用在`component`标签上
-- `$scopedSlots`属性被移除，都用`$slots`代替
-- 特性强制策略变更
-- 自定义指令 API 和组件一致
-- `watch`选项和`$watch`不再支持点分隔符字符串路径, 使用计算函数作为其参数
+## 四、Suspense - 悬念
+
+Loading 效果实现，当我们加载后端数据时，通常在等待接口返回结果时显示 loading，一般我们会使用`v-if`和`v-else`来控制。还会有这样的场景，在一个组件树中，其中几个子组件需要加载后端数据，当加载完成前父组件应该处于 loading 状态，这时就需要借助全局状态管理来管理 loading 状态
+在`Vue3.0`中我们可以通过`Suspense`解决这个问题
+
+- 将异步组件包装在`<template #default>`标签中
+- 将 loading 组件包装在`<template #fallback>`标签中
+- 这里的异步组件说的是将`setup`设置成异步
+
+1. 父组件
+
+```javascript
+<template>
+  <Suspense>
+    <template #default>
+      <article-info></article-info>
+    </template>
+    <template #fallback>
+      <div>Loading...</div>
+    </template>
+  </Suspense>
+</template>
+
+<script>
+import ArticleInfo from './ArticleInfo.vue'
+export default {
+  name: 'ArticlePost',
+  components: { ArticleInfo }
+};
+</script>
+```
+
+2. 子组件
+
+```javascript
+<script>
+import { ref } from "vue";
+async function getArticleInfo() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve([1, 2, 3, 4]);
+    }, 1000);
+  });
+}
+export default {
+  name: "ArticleInfo",
+  async setup() {
+    const data = ref([]);
+    data.value = await getArticleInfo();
+    return { data };
+  },
+};
+</script>
+```
