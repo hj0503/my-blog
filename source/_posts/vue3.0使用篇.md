@@ -183,7 +183,7 @@ setup() {
   | errorCaptured | onErrorCaptured |
   | | onRenderTracked |
   | | onRenderTriggered |
-- 新增的`onRenderTracked`、`onRenderTriggered`生命周期函数都会接收一个参数`DebuggerEvent`，返回组件更新的所有信息
+- 新增的`onRenderTracked`、`onRenderTriggered`生命周期函数都会接收一个参数`DebuggerEvent`，返回组件更新的信息
 - 进行`Vue2.x`和`Vue3.x`混用时，生命周期函数执行顺序
 
   ```javascript
