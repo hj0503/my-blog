@@ -10,9 +10,8 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 
 ## 一、vue3.0 重要的优化
 
-- 模板编译速度的提升，对静态数据的跳过处理
+- Composition API
 - 对数组的监控
-- 对 ts 有了很好的支持
 - 对 2.x 版本的完全兼容
 
 ## 二、Composition API

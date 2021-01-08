@@ -9,4 +9,5 @@ cover: https://mmbiz.qpic.cn/sz_mmbiz_png/H8M5QJDxMHq6k6758eEZYHtrA3PDWKrhOr7JDj
 ---
 
 ## suspense 用法
+suspense使用方法见[vue3.x-suspense](http://devinhj.cn/2020/12/05/vue3.0%E4%BD%BF%E7%94%A8%E7%AF%87/)
 ## suspense 原理解析
