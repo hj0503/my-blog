@@ -9,3 +9,4 @@ categories: vue
 
 ## vue2.x版本响应式Object.defineProperty
 ## vue3.x版本响应式Proxy
+## proxy对比Object.defineProperty
