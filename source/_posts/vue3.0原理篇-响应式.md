@@ -6,6 +6,7 @@ tags:
   - vue3.0
   - 前端
 categories: vue
+cover: ../images/Vue.jpeg
 ---
 
 ## vue2.x版本响应式Object.defineProperty
