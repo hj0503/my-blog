@@ -21,4 +21,17 @@ BEM（块，元素，修饰符）是基于组件的 Web 开发方法。其背后
 **Modifier**
 `Modifier`是描述当前元素的外观、状态或者行为
 
-> 总结一下用法为：block-name\_\_element-name--modifier-name，也就是模块名 + 元素名 + 修饰器名
+> 总结一下用法为：block-name\_\_element-name-\-modifier-name，也就是模块名 + 元素名 + 修饰器名
+
+## 实例
+
+### element-ui中的使用
+我们可以看下`ElementUI`中所用到的BEM规范
+```css
+$namespace: 'el';
+$element-separator: '__';
+$modifier-separator: '--';
+$state-prefix: 'is-';
+```
+`ElementUI`在其中加了命名空间`el`针对该ui特有的名称，在工作中我们一般都是用公司名称部门
+`element`和`modifier`连接都是用的`BEM`规范中的，另外还加了状态标识用`is-`开头
