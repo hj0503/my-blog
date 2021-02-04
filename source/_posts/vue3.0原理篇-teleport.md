@@ -1,11 +1,11 @@
 ---
-title: vue3.0原理篇-teleport
+title: Vue3.0原理篇-teleport
 date: 2021-01-07 10:20:21
 tags:
-  - vue
-  - vue3.0
+  - Vue
+  - Vue3.0
   - 前端
-categories: vue
+categories: Vue
 cover: ../images/Vue.jpeg
 ---
 

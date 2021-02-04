@@ -1,11 +1,11 @@
 ---
-title: vue3.0使用篇
+title: Vue3.0使用篇
 date: 2020-12-05 21:02:06
 tags:
-  - vue
-  - vue3.0
+  - Vue
+  - Vue3.0
   - 前端
-categories: vue
+categories: Vue
 cover: ../images/Vue.jpeg
 ---
 
