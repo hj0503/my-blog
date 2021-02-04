@@ -5,6 +5,7 @@ tags:
   - 前端
   - css
 categories: css
+cover: ../images/Vite.jpeg
 ---
 
 ## 介绍
