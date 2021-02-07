@@ -6,6 +6,7 @@ tags:
   - Vue3.0
   - 前端
 categories: Vue3.0
+cover: ../images/Vue.jpeg
 ---
 
 ## 前言
