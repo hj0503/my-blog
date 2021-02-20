@@ -6,6 +6,7 @@ tags:
   - Vue
   - Vue3.0
 categories: Vue
+cover: ../images/Vite.svg
 ---
 
 ## 什么是 vite
