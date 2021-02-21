@@ -356,3 +356,6 @@ export default {
 };
 </script>
 ```
+
+## 最后
+> 想要了解更多Vue3.0新特性的使用可以学习下[ElementUI源码](https://github.com/element-plus/element-plus)，或者[ant-design-vue2源码](https://github.com/vueComponent/ant-design-vue)，其中`ant-design-vue`使用的是jsx语法
