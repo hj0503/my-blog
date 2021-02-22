@@ -8,6 +8,7 @@ tags:
 categories: Vue
 cover: ../images/Vite.svg
 ---
+> 在学习Vite之前，可以先了解下`原生ESM`、`[esbuild](https://esbuild.github.io/)`
 ## 什么是 v、Vite
 
 借用作者的原话：
