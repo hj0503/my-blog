@@ -8,7 +8,7 @@ tags:
 categories: Vue
 cover: ../images/Vite.svg
 ---
-> 在学习Vite之前，可以先了解下`原生ESM`、`[esbuild](https://esbuild.github.io/)`
+> 在学习Vite之前，可以先了解下`原生ESM`、`[esbuild](https://esbuild.github.io/)`、`[Rollup](https://www.rollupjs.com/)`
 ## 什么是 v、Vite
 
 借用作者的原话：
@@ -20,5 +20,8 @@ cover: ../images/Vite.svg
 Vite主打特点就是轻快冷服务启动。冷服务的意思是，在开发预览中，它是不进行打包的。
 开发中可以实现热更新，也就是说在你开发的时候，只要一保存，结果就会更新。
 按需进行更新编译，不会刷新全部DOM节点。这功能会加快我们的开发流程度。
+
+## Vite插件
+当我们遇到当前vite不支持的功能时，可以通过vite插件来解决
 
 ## Vite使用
