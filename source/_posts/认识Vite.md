@@ -1,11 +1,10 @@
 ---
-title: Vite浅析
+title: Hello Vite
 date: 2021-02-04 22:53:20
 tags:
   - 前端
-  - Vue
-  - Vue3.0
-categories: Vue
+  - Vite
+categories: Vite
 cover: ../images/Vite.svg
 ---
 > 在学习Vite之前，可以先了解下`原生ESM`、`[esbuild](https://esbuild.github.io/)`、`[Rollup](https://www.rollupjs.com/)`
