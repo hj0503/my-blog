@@ -10,7 +10,7 @@ cover: ../images/Vite.svg
 
 > 在学习 Vite 之前，可以先了解下[基于浏览器 native 的 ES module](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import)、[esbuild](https://esbuild.github.io/)、[Rollup](https://www.rollupjs.com/)、
 
-## 什么是 v、Vite
+## 什么是Vite
 
 借用作者的原话：
 
