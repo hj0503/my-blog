@@ -4,8 +4,7 @@ date: 2020-12-05 21:02:06
 tags:
   - Vue
   - Vue3.0
-  - 前端
-categories: Vue
+categories: 前端框架
 cover: ../images/Vue.jpeg
 ---
 

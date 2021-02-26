@@ -4,7 +4,7 @@ date: 2021-02-04 22:53:20
 tags:
   - 前端
   - Vite
-categories: Vite
+categories: 构建工具
 cover: ../images/Vite.svg
 ---
 

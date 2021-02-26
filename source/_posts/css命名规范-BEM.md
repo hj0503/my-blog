@@ -2,7 +2,6 @@
 title: css命名规范-BEM
 date: 2021-01-28 16:35:15
 tags:
-  - 前端
   - css
 categories: css
 cover: ../images/Vite.jpeg

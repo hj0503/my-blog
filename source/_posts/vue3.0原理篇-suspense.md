@@ -3,9 +3,8 @@ title: Vue3.0原理篇-suspense
 date: 2021-01-05 10:20:21
 tags:
   - Vue
-  - 前端
   - Vue3.0
-categories: Vue
+categories: 前端框架
 cover: ../images/Vue.jpeg
 ---
 

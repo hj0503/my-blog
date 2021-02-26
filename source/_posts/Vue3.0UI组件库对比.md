@@ -4,8 +4,7 @@ date: 2021-02-06 21:32:04
 tags:
   - Vue
   - Vue3.0
-  - 前端
-categories: Vue3.0
+categories: 前端框架
 cover: ../images/Vue.jpeg
 ---
 
