@@ -74,7 +74,7 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
 
-- 使用[es-module-lexer](https://github.com/guybedford/es-module-lexer) + magic-string(https://github.com/Rich-Harris/magic-string)重写轻量级模块
+- 使用[es-module-lexer](https://github.com/guybedford/es-module-lexer) + [magic-string](https://github.com/Rich-Harris/magic-string)重写轻量级模块
 - 没有完整的AST解析/转换，非常快(对于大多数文件<1ms)
 ```javascript
 Source
@@ -83,6 +83,12 @@ import { createApp } from 'vue'
 Rewritten
 import { createApp } from '/@modules/vue'
 ```
+浏览器里使用 ES module 是使用 http 请求拿到模块，所以 vite 必须提供一个 web server 去代理这些模块，vite 通过对请求路径的劫持获取资源的内容返回给浏览器，不过 vite 对于模块导入做了特殊处理。
+- 在 koa 中间件里获取请求 body
+- 通过 es-module-lexer 解析资源 ast 拿到 import 的内容
+- 判断 import 的资源是否是绝对路径，绝对视为 npm 模块
+- 返回处理后的资源路径："vue" => "/@modules/vue"，vite在plugin中把文件路径rewrite成了`@modules`
+
 
 ### 热更新
 ### 基于`Rollup`的生成环境构建
