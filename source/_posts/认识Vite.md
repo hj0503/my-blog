@@ -66,7 +66,7 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 
 #### ES module 带来的问题
 
-当模块数很大时，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，不如`lodash`
+当模块数很大时，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，比如`lodash`
 
 - 优化 1：依赖预构建（esbuld）
   - 确保一个文件一个请求
@@ -75,22 +75,98 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
 
 - 使用[es-module-lexer](https://github.com/guybedford/es-module-lexer) + [magic-string](https://github.com/Rich-Harris/magic-string)重写轻量级模块
-- 没有完整的AST解析/转换，非常快(对于大多数文件<1ms)
-```javascript
-Source
-import { createApp } from 'vue'
+- 没有完整的 AST 解析/转换，非常快(对于大多数文件<1ms)
 
-Rewritten
-import { createApp } from '/@modules/vue'
+```javascript
+Source;
+import { createApp } from 'vue';
+
+Rewritten;
+import { createApp } from '/@modules/vue';
 ```
+
 浏览器里使用 ES module 是使用 http 请求拿到模块，所以 vite 必须提供一个 web server 去代理这些模块，vite 通过对请求路径的劫持获取资源的内容返回给浏览器，不过 vite 对于模块导入做了特殊处理。
+
 - 在 koa 中间件里获取请求 body
 - 通过 es-module-lexer 解析资源 ast 拿到 import 的内容
 - 判断 import 的资源是否是绝对路径，绝对视为 npm 模块
-- 返回处理后的资源路径："vue" => "/@modules/vue"，vite在plugin中把文件路径rewrite成了`@modules`
+- 返回处理后的资源路径："vue" => "/@modules/vue"，vite 在 plugin 中把文件路径 rewrite 成了`@modules`
 
+### vue 文件编译
+
+在 Vite1 中，会把.vue 文件拆成三个请求，分别是`script`、`template`，`style`，浏览器会先收到包含 script 逻辑的 App.vue 的响应，然后解析到 template、 style 的路径后，会再次发起 HTTP 请求来请求对应的资源，此时 Vite 对其拦截并再次处理后返回相应的内容。
+
+```javascript
+import { ref, reactive } from '/@modules/vue.js';
+const __script = {
+  name: 'HelloWorld',
+  setup() {
+    console.log(this);
+    const count = ref(0);
+    const object = reactive({
+      foo: 'bar',
+    });
+
+    return {
+      count,
+      object,
+    };
+  },
+};
+
+// 将 style 拆分成 /HelloWorld.vue?type=style 请求，由浏览器继续发起请求获取样式
+import '/src/components/HelloWorld.vue?type=style&index=0';
+__script.__scopeId = 'data-v-62a9ebed';
+
+// 将 template 拆分成 /HelloWorld.vue?type=template 请求，由浏览器继续发起请求获取 render function
+import { render as __render } from '/src/components/HelloWorld.vue?type=template';
+__script.render = __render;
+__script.__hmrId = '/src/components/HelloWorld.vue';
+__script.__file =
+  '/Users/admin/huangjun/hjjobs/Vue/hello-vite/src/components/HelloWorld.vue';
+export default __script;
+```
+> 在Vite2中，script和template合并成一起请求
+
+这一步的拆分的核心逻辑是根据 URL 的 query 参数来做不同的处理：
+```javascript
+// 如果没有 query 的 type，比如直接请求的 /App.vue
+if (!query.type) {
+  ctx.type = 'js'
+  ctx.body = compileSFCMain(descriptor, filePath, publicPath) // 编译 App.vue，编译成上面说的带有 script 内容，以及 template 和 style 链接的形式。
+  return etagCacheCheck(ctx) // ETAG 缓存检测相关逻辑
+}
+
+// 如果 query 的 type 是 template，比如 /App.vue?type=template&xxx
+if (query.type === 'template') {
+  ctx.type = 'js'
+  ctx.body = compileSFCTemplate( // 编译 template 生成 render function
+    // ...
+  )
+  return etagCacheCheck(ctx)
+}
+
+// 如果 query 的 type 是 style，比如 /App.vue?type=style&xxx
+if (query.type === 'style') {
+  const index = Number(query.index)
+  const styleBlock = descriptor.styles[index]
+  const result = await compileSFCStyle( // 编译 style
+    // ...
+  )
+  if (query.module != null) { // 如果是 css module
+    ctx.type = 'js'
+    ctx.body = `export default ${JSON.stringify(result.modules)}`
+  } else { // 正常 css
+    ctx.type = 'css'
+    ctx.body = result.code
+  }
+}
+```
 
 ### 热更新
+Vite 的是通过 WebSocket 来实现的热更新通信
+
 ### 基于`Rollup`的生成环境构建
-- Rollup是在构建速度、tree-shaking和输出大小方面表现最好的基于js的模块打包器
-- 它也围绕ES模块构建，这与Vite的前提一致
+
+- Rollup 是在构建速度、tree-shaking 和输出大小方面表现最好的基于 js 的模块打包器
+- 它也围绕 ES 模块构建，这与 Vite 的前提一致
