@@ -70,6 +70,7 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 
 - 优化 1：依赖预构建（esbuld）
   - 确保一个文件一个请求
+  - CommonJS 和 UMD 兼容性
 - 优化 2：code split
 
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
