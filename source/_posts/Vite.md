@@ -76,6 +76,7 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
 
 - 使用[es-module-lexer](https://github.com/guybedford/es-module-lexer) + [magic-string](https://github.com/Rich-Harris/magic-string)重写轻量级模块
+  - `es-module-lexer`分析代码中的模块加载导出关系
 - 没有完整的 AST 解析/转换，非常快(对于大多数文件<1ms)
 
 ```javascript
