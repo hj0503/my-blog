@@ -128,45 +128,49 @@ __script.__file =
   '/Users/admin/huangjun/hjjobs/Vue/hello-vite/src/components/HelloWorld.vue';
 export default __script;
 ```
-> 在Vite2中，script和template合并成一起请求
+
+> 在 Vite2 中，script 和 template 合并成一起请求
 
 这一步的拆分的核心逻辑是根据 URL 的 query 参数来做不同的处理：
+
 ```javascript
 // 如果没有 query 的 type，比如直接请求的 /App.vue
 if (!query.type) {
-  ctx.type = 'js'
-  ctx.body = compileSFCMain(descriptor, filePath, publicPath) // 编译 App.vue，编译成上面说的带有 script 内容，以及 template 和 style 链接的形式。
-  return etagCacheCheck(ctx) // ETAG 缓存检测相关逻辑
+  ctx.type = 'js';
+  ctx.body = compileSFCMain(descriptor, filePath, publicPath); // 编译 App.vue，编译成上面说的带有 script 内容，以及 template 和 style 链接的形式。
+  return etagCacheCheck(ctx); // ETAG 缓存检测相关逻辑
 }
 
 // 如果 query 的 type 是 template，比如 /App.vue?type=template&xxx
 if (query.type === 'template') {
-  ctx.type = 'js'
-  ctx.body = compileSFCTemplate( // 编译 template 生成 render function
-    // ...
-  )
-  return etagCacheCheck(ctx)
+  ctx.type = 'js';
+  ctx.body = compileSFCTemplate(); // 编译 template 生成 render function
+  // ...
+  return etagCacheCheck(ctx);
 }
 
 // 如果 query 的 type 是 style，比如 /App.vue?type=style&xxx
 if (query.type === 'style') {
-  const index = Number(query.index)
-  const styleBlock = descriptor.styles[index]
-  const result = await compileSFCStyle( // 编译 style
-    // ...
-  )
-  if (query.module != null) { // 如果是 css module
-    ctx.type = 'js'
-    ctx.body = `export default ${JSON.stringify(result.modules)}`
-  } else { // 正常 css
-    ctx.type = 'css'
-    ctx.body = result.code
+  const index = Number(query.index);
+  const styleBlock = descriptor.styles[index];
+  const result = await compileSFCStyle(); // 编译 style
+  // ...
+  if (query.module != null) {
+    // 如果是 css module
+    ctx.type = 'js';
+    ctx.body = `export default ${JSON.stringify(result.modules)}`;
+  } else {
+    // 正常 css
+    ctx.type = 'css';
+    ctx.body = result.code;
   }
 }
 ```
 
 ### 热更新
-Vite 的是通过 WebSocket 来实现的热更新通信
+
+Vite 的热加载原理，其实就是在客户端与服务端建立了一个 websocket 连接，当代码被修改时，服务端发送消息通知客户端去请求修改模块的代码，完成热更新。
+服务端做的就是监听代码文件的改变，在合适的时机向客户端发送 websocket 信息通知客户端去请求新的模块代码。
 
 ### 基于`Rollup`的生成环境构建
 
