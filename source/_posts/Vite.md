@@ -66,12 +66,12 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 
 #### ES module 带来的问题
 
-当模块数很大时，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，比如`lodash`
+当模块数很大时，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，比如`lodash-es`
 
 - 优化 1：依赖预构建（esbuld）
   - 确保一个文件一个请求
   - CommonJS 和 UMD 兼容性
-- 优化 2：code split
+  - 编译tsx、jsx文件，比tsc快20-30倍
 
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
 
