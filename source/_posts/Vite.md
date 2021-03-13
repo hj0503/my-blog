@@ -27,7 +27,13 @@ Vite 主打特点就是轻快冷服务启动。冷服务的意思是，在开发
 
 ![Vite vs VueCli](/images/Vite/ViteVueCli.png)
 
-## Vite 开发服务器使用原生 ES module
+## 从几个方面讲
+- 开发服务器使用ESM
+- 依赖预编译`(esbuild)`
+- 热更新
+- 生产环境使用`Rollup`
+
+## 一、开发服务器使用ESM
 
 在开发服务器，Vite 利用浏览器原生的 ES 模块支持，在 script 标签里设置`type="module"`，然后使用模块内容
 
