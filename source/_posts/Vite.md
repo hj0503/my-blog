@@ -1,5 +1,5 @@
 ---
-title: Hello Vite
+title: Vite - 快就一个字，我只说说一次
 date: 2021-02-04 22:53:20
 tags:
   - 前端
@@ -28,12 +28,13 @@ Vite 主打特点就是轻快冷服务启动。冷服务的意思是，在开发
 ![Vite vs VueCli](/images/Vite/ViteVueCli.png)
 
 ## 从几个方面讲
-- 开发服务器使用ESM
+
+- 开发服务器使用 ESM
 - 依赖预编译`(esbuild)`
 - 热更新
 - 生产环境使用`Rollup`
 
-## 一、开发服务器使用ESM
+## 一、开发服务器使用 ESM
 
 在开发服务器，Vite 利用浏览器原生的 ES 模块支持，在 script 标签里设置`type="module"`，然后使用模块内容
 
@@ -71,13 +72,6 @@ vite 可以只在需要某个模块的时候动态的引入它，而不需要提
 ![Native ESM based dev server](/images/Vite/ESMBasedDevServer.png)
 
 #### ES module 带来的问题
-
-当模块数很大时，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，比如`lodash-es`
-
-- 优化 1：依赖预构建（esbuld）
-  - 确保一个文件一个请求
-  - CommonJS 和 UMD 兼容性
-  - 编译tsx、jsx文件，比tsc快20-30倍
 
 原生`ESM`不支持裸导入，`import { createApp } from 'vue'`
 
@@ -173,12 +167,41 @@ if (query.type === 'style') {
 }
 ```
 
+### 依赖预编译
+
+在 vite1.x 版本中使用 rollup 进行预编译，vite2.0 中换成 esbuild
+
+#### 什么是依赖预编译
+
+- 默认情况下，Vite 会将 package.json 中生产依赖 dependencies 的部分启用依赖预编译，即会先对该依赖进行编译，然后将编译后的文件缓存在内存中（node_modules/.vite 文件下），在启动 DevServer 时直接请求该缓存内容。
+- 在 vite.config.js 文件中配置 optimizeDeps 选项可以选择需要或不需要进行预编译的依赖的名称，Vite 则会根据该选项来确定是否对该依赖进行预编译。
+- 在启动时添加 --force options，可以用来强制重新进行依赖预编译。
+
+#### 依赖预编译的作用
+
+**1、兼容 CommonJS 和 AMD 模块的依赖**
+因为 Vite 的 DevServer 是基于浏览器的 Natvie ES Module 实现的，所以对于使用的依赖如果是 CommonJS 或 AMD 的模块，则需要进行模块类型的转化（ES Module）。
+**2、减少模块间依赖引用导致过多的请求次数**
+当模块数很大时，如果没有预编译的话，页面加载比`bundled`更慢，有许多内部模块的依赖尤为突出，比如`lodash-es`
+![Native ESM based dev server](/images/Vite/lodash-es.png)
+**3、编译 tsx、jsx 文件，比 tsc 快 20-30 倍**
+
+#### 依赖预编译实现过程
+
+- 读取依赖文件信息
+- 对比缓存文件的 hash
+- 缓存是否失效或者未缓存
+- 处理 optimzeDeps.include 相关依赖
+- 使用 esbuild 编译依赖
+
 ### 热更新
 
 Vite 的热加载原理，其实就是在客户端与服务端建立了一个 websocket 连接，当代码被修改时，服务端发送消息通知客户端去请求修改模块的代码，完成热更新。
 服务端做的就是监听代码文件的改变，在合适的时机向客户端发送 websocket 信息通知客户端去请求新的模块代码。
 
 ### 基于`Rollup`的生成环境构建
+
+Rollup 是基于 ES2015 的 JavaScript 打包工具。它将小文件打包成一个大文件或者更复杂的库和应用，打包既可用于浏览器和 Node.js 使用。 Rollup 最显著的地方就是能让打包文件体积很小。相比其他 JavaScript 打包工具，Rollup 总能打出更小，更快的包。因为 Rollup 基于 ES2015 模块，比 Webpack 和 Browserify 使用的 CommonJS 模块机制更高效。
 
 - Rollup 是在构建速度、tree-shaking 和输出大小方面表现最好的基于 js 的模块打包器
 - 它也围绕 ES 模块构建，这与 Vite 的前提一致
