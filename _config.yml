@@ -116,5 +116,5 @@ theme: butterfly
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/hj0503/frontend-blog.git
+  repo: git@github.com:hj0503/frontend-blog.git
   branch: main
