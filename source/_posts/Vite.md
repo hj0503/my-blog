@@ -2,7 +2,6 @@
 title: Vite - 快就一个字，我只说一次
 date: 2021-02-04 22:53:20
 tags:
-  - 前端
   - Vite
 categories: 构建工具
 cover: ../images/Vite.svg
