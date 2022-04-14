@@ -1,5 +1,5 @@
 ---
-title: Vite - 快就一个字，我只说一次
+title: Vite
 date: 2021-02-04 22:53:20
 tags:
   - Vite
