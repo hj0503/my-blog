@@ -1,23 +1,25 @@
-class myPromise {
+class MyPromise {
   static PENDING = 'pending';
   static FULFILLED = 'fulfilled';
   static REJECTED = 'rejected';
+
   constructor(executor) {
-    this.state = myPromise.PENDING; // 初始化状态为pedding pending || fullfilled || rejected
+    this.state = MyPromise.PENDING; // 初始化状态为pedding pending || fullfilled || rejected
     this.value = undefined; // 成功的值
     this.reason = undefined; // 失败的原因
     this.onFulfilledCallbacks = []; // 保存成功回调
     this.onRejectedCallbacks = []; // 保存失败回调
+
     let resolve = value => {
       // 只有当前状态为pending时调用resolve才会变成fulfilled
-      if (this.state === myPromise.PENDING) {
+      if (this.state === MyPromise.PENDING) {
         // resolve的值要在resolve后面的代码后执行 例如
         // setTimeout(() => {
         //   resolve(1)
         //   console.log(2)
         // })
         setTimeout(() => {
-          this.state = myPromise.FULFILLED;
+          this.state = MyPromise.FULFILLED;
           this.value = value;
           this.onFulfilledCallbacks.forEach(onFulfilled => {
             onFulfilled(value);
@@ -25,11 +27,12 @@ class myPromise {
         });
       }
     };
+
     let reject = reason => {
       // 只有当前状态为pending时调用reject才会变成rejected
-      if (this.state === myPromise.PENDING) {
+      if (this.state === MyPromise.PENDING) {
         setTimeout(() => {
-          this.state = myPromise.REJECTED;
+          this.state = MyPromise.REJECTED;
           this.reason = reason;
           this.onRejectedCallbacks.forEach(onRejected => {
             onRejected(reason);
@@ -58,9 +61,9 @@ class myPromise {
             throw reason;
           };
     // then方法必须返回一个新的promise
-    const newPromise = new myPromise((resolve, reject) => {
+    const newPromise = new MyPromise((resolve, reject) => {
       // 当为pending状态时先保存两个执行的函数
-      if (this.state === myPromise.PENDING) {
+      if (this.state === MyPromise.PENDING) {
         this.onFulfilledCallbacks.push(() => {
           try {
             const x = onFulfilled(this.value);
@@ -80,7 +83,7 @@ class myPromise {
       }
 
       // 状态为fulffilled执行onFulfilled，并传入成功的值
-      if (this.state === myPromise.FULFILLED) {
+      if (this.state === MyPromise.FULFILLED) {
         setTimeout(() => {
           try {
             // 如果onFulfilled返回一个值x时 调用resolvePromise方法
@@ -94,7 +97,7 @@ class myPromise {
       }
 
       // 状态为rejected执行onRejected，并传入失败的原因
-      if (this.state === myPromise.REJECTED) {
+      if (this.state === MyPromise.REJECTED) {
         setTimeout(() => {
           try {
             const x = onRejected(this.reason);
@@ -106,6 +109,29 @@ class myPromise {
       }
     });
     return newPromise;
+  }
+
+  static resolve(value) {
+    // 如果这个值是一个 promise ，那么将返回这个 promise
+    if (value instanceof MyPromise) {
+      return value;
+    }
+    // 如果这个值是thenable（即带有`"then" `方法），返回的promise会“跟随”这个thenable的对象，采用它的最终状态；
+    if (value instanceof Object && 'then' in value) {
+      return new MyPromise((resolve, reject) => {
+        value.then(resolve, reject);
+      });
+    }
+    // 否则返回的promise将以此值完成，即以此值执行`resolve()`方法 (状态为fulfilled)
+    return new MyPromise(resolve => {
+      resolve(value);
+    });
+  }
+
+  static reject(reason) {
+    return new MyPromise((resolve, reject) => {
+      reject(reason);
+    });
   }
 }
 
@@ -123,8 +149,8 @@ function resolvePromise(newPromise, x, resolve, reject) {
   }
 
   // 2.3.2 如果 x 为 Promise ，则使 newPromise 接受 x 的状态
-  if (x instanceof myPromise) {
-    if (x.state === myPromise.PENDING) {
+  if (x instanceof MyPromise) {
+    if (x.state === MyPromise.PENDING) {
       /**
        * 2.3.2.1 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝
        *         注意"直至 x 被执行或拒绝"这句话，
@@ -133,10 +159,10 @@ function resolvePromise(newPromise, x, resolve, reject) {
       x.then(y => {
         resolvePromise(newPromise, y, resolve, reject);
       }, reject);
-    } else if (x.state === myPromise.FULFILLED) {
+    } else if (x.state === MyPromise.FULFILLED) {
       // 2.3.2.2 如果 x 处于执行态，用相同的值执行 promise
       resolve(x.state);
-    } else if (x.state === myPromise.REJECTED) {
+    } else if (x.state === MyPromise.REJECTED) {
       // 2.3.2.3 如果 x 处于拒绝态，用相同的据因拒绝 promise
       reject(x.reason);
     }
