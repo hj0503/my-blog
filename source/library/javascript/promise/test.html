@@ -26,10 +26,27 @@
       //   .then(value => {
       //     console.log(value);
       //   });
-      const promise1 = MyPromise.resolve(111);
-      promise1.then();
-      const a = ""
-      console.log('223232323', MyPromise.prototype);
+      MyPromise.all([
+        new MyPromise(resolve => {
+          resolve(1);
+        }),
+        {
+          then: resolve => {
+            resolve(33333);
+          },
+        },
+      ])
+        .then(
+          result => {
+            console.log('rrrrrr', result);
+          },
+          reason => {
+            console.log('reason1', reason);
+          }
+        )
+        .catch(reason => {
+          console.log('reason', reason);
+        });
     </script>
   </body>
 </html>

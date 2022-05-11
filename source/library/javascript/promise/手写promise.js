@@ -133,6 +133,42 @@ class MyPromise {
       reject(reason);
     });
   }
+
+  catch(onRejected) {
+    return this.then(undefined, onRejected);
+  }
+
+  // 无论promise是成功还是失败都执行callback
+  finally(callback) {
+    return this.then(callback, callback);
+  }
+
+  static all(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (Array.isArray(promises)) {
+        const result = [];
+        let count = 0;
+        if (promises.length === 0) {
+          return resolve(promises);
+        }
+
+        promises.forEach((promise, index) => {
+          MyPromise.resolve(promise).then(
+            value => {
+              count++;
+              result[index] = value;
+              count === promises.length && resolve(result);
+            },
+            reason => {
+              reject(reason);
+            }
+          );
+        });
+      } else {
+        return reject(new TypeError('Argument is not iterable'));
+      }
+    });
+  }
 }
 
 /**
