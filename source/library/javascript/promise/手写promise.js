@@ -169,6 +169,8 @@ class MyPromise {
       }
     });
   }
+
+  static race(promise) {}
 }
 
 /**
