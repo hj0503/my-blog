@@ -170,7 +170,49 @@ class MyPromise {
     });
   }
 
-  static race(promise) {}
+  static allSettled(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (Array.isArray(promises)) {
+        const result = [];
+        let count = 0;
+        if (promises.length === 0) {
+          return resolve(promises);
+        }
+
+        promises.forEach((promise, index) => {
+          MyPromise.resolve(promise).then(
+            value => {
+              count++;
+              result[index] = { value, status: promise.state };
+              count === promises.length && resolve(result);
+            },
+            reason => {
+              count++;
+              result[index] = { reason, status: promise.state };
+              count === promises.length && resolve(result);
+            }
+          );
+        });
+      } else {
+        return reject(new TypeError('Argument is not iterable'));
+      }
+    });
+  }
+
+  static race(promises) {
+    return new MyPromise((resolve, reject) => {
+      if (Array.isArray(promises)) {
+        // 如果传入的promises是空的，则返回的promise永远是等待状态
+        if (promises.length > 0) {
+          promises.forEach(promise => {
+            MyPromise.resolve(promise).then(resolve, reject);
+          });
+        }
+      } else {
+        return reject(new TypeError('Argument is not iterable'));
+      }
+    });
+  }
 }
 
 /**
