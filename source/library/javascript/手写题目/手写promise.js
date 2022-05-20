@@ -13,7 +13,7 @@ class MyPromise {
     let resolve = value => {
       // 只有当前状态为pending时调用resolve才会变成fulfilled
       if (this.state === MyPromise.PENDING) {
-        // resolve的值要在resolve后面的代码后执行 例如
+        // resolve的值要在resolve后面的代码后执行，例如
         // setTimeout(() => {
         //   resolve(1)
         //   console.log(2)
