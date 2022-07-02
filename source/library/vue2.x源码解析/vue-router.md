@@ -1,4 +1,4 @@
-### VueRouter
+### Vue-Router
 
 ### Vue.use(VueRouter)
 
