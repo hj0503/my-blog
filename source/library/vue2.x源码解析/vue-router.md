@@ -80,3 +80,17 @@ export function install(Vue) {
   rats.created;
 }
 ```
+
+`Vue-Router` 安装最重要的⼀步就是利⽤ `Vue.mixin` 去把 `beforeCreate` 和 `destroyed` 钩⼦函数 注⼊到每⼀个组件中。 `Vue.mixin` 的定义，在 `vue/src/core/global-api/mixin.js` 中：
+
+```javascript
+export function initMixin(Vue: GlobalAPI) {
+  Vue.mixin = function (mixin: Object) {
+    this.options = mergeOptions(this.options, mixin);
+    return this;
+  };
+}
+```
+
+#### Vue-Router对象
+
