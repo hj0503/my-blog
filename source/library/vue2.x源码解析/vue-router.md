@@ -95,3 +95,5 @@ export function initMixin(Vue: GlobalAPI) {
 #### Vue-Router 对象
 
 `VueRouter` 的实现是⼀个类，我们先对它做⼀个简单地分析，它的定义在 `src/index.js` 中：
+```javascript
+```
