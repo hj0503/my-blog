@@ -94,6 +94,30 @@ export function initMixin(Vue: GlobalAPI) {
 
 #### Vue-Router 对象
 
-`VueRouter` 的实现是⼀个类，我们先对它做⼀个简单地分析，它的定义在 `src/index.js` 中：
+`VueRouter` 的实现是⼀个类，我们先对它做⼀个简单地分析，它的定义在 `src/index.js` 中
+`VueRouter` 定义了⼀些属性和⽅法，我们先从它的构造函数看，当我们执⾏ `new VueRouter` 的时 候做了哪些事情。
+
+- this.app 表⽰根 Vue 实例
+- this.apps 保存所有⼦组件的 Vue 实例
+- this.options 保存传⼊的路由配置
+- this.beforeHooks 、 this.resolveHooks 、 this.afterHooks 表⽰⼀些钩⼦函数
+- this.matcher 表⽰路由匹配器
+- this.fallback 表⽰路由创建失败的回调函数
+- this.mode 表⽰路由创建的模式
+- this.history 表⽰路由历史的具体的实现实例，它是根据 this.mode 的不 同实现不同，它有 History 基类，然后不同的 history 实现都是继承 History
+
+实例化 `VueRouter` 后会返回它的实例 `router` ，我们在 `new Vue` 的时候会把 `router` 作为配置 的属性传⼊，回顾⼀下上⼀节我们讲 `beforeCreated` 混⼊的时候有这么⼀段代码：
+
 ```javascript
+beforeCreated() {
+  if (isDef(this.$options.router)) {
+    // ...
+    this._router = this.$options.router;
+    this._router.init(this);
+    // ...
+  }
+}
 ```
+
+所以每个组件在执⾏ `beforeCreated` 钩⼦函数的时候，都会执⾏ `router.init` ⽅法
+`init` 的逻辑很简单，它传⼊的参数是 `Vue` 实例，然后存储到 `this.apps` 中；只有根 `Vue` 实例 会保存到 `this.app` 中，并且会拿到当前的 `this.history` ，根据它的不同类型来执⾏不同逻辑
