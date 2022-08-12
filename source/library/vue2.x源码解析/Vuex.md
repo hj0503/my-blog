@@ -5,3 +5,5 @@
 ### 使用
 
 ### 原理
+
+使用Vue.use(vuex)安装vuex插件，vuex对象有install方法
