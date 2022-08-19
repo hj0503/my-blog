@@ -2,7 +2,7 @@
 
 #### 一、对 v-model 指令进行编译
 
-##### input 元素
+##### input、textarea、radio等元素
 
 例如：
 
