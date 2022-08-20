@@ -44,4 +44,4 @@ data.on = {
 ```
 
 参考:
-[v-model 源码解析](https://segmentfault.com/a/1190000015848976)
+- [v-model 源码解析](https://segmentfault.com/a/1190000015848976)
