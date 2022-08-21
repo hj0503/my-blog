@@ -1,6 +1,11 @@
 ### v-model(双向绑定)
 
-#### 一、对 v-model 指令进行编译
+##### 总体流程
+
+- Vue初始化组件时通过genDirectives(el, state)进行指令解析
+- Vue通过state找到model指令对应的方法model(el, dir, _warn)
+- model()根据表单元素的tag标签以及type属性的值，调用不同的方法也就验证了官网所说的“随表单控件类型不同而不同
+- 通过genAssignmentCode()方法生成v-model value值的代码。例如："message=$event.target.value"
 
 ##### input、textarea、radio等元素
 
