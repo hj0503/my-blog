@@ -22,5 +22,20 @@ tags:
 在`module.rules`中指定一个或者多个`loader`
 
 ```js
-
+module: {
+  rules: [
+    {
+      test: /\.css$/,
+      use: [
+        { loader: 'style-loader' },
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+          },
+        },
+      ],
+    },
+  ];
+}
 ```
