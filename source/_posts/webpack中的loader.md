@@ -17,11 +17,15 @@ tags:
 - 内联：在每个`import`语句中显示指定`loader`
 - CLI：在`shell`命令中指定它们
 
-##### 配置
+##### 配置(推荐)
 
 在`module.rules`中指定一个或者多个`loader`
 
 ```js
+resolveLoader: {
+    // loader路径查找顺序从左往右
+  modules: ['node_modules', './'],
+};
 module: {
   rules: [
     {
@@ -38,4 +42,18 @@ module: {
     },
   ];
 }
+```
+
+##### 内联
+
+```js
+// ! 多个loader分割
+import Styles from 'style-loader!css-loader?modules!./styles.css';
+```
+
+##### CLI
+
+```js
+// 对 .jade 文件使用 jade-loader，对 .css 文件使用 style-loader 和 css-loader。
+webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
 ```
