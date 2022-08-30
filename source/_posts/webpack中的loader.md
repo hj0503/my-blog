@@ -57,3 +57,9 @@ import Styles from 'style-loader!css-loader?modules!./styles.css';
 // 对 .jade 文件使用 jade-loader，对 .css 文件使用 style-loader 和 css-loader。
 webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
 ```
+
+#### 二、自定义 loader
+
+```js
+
+```
