@@ -60,6 +60,29 @@ webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
 
 #### 二、自定义 loader
 
-```js
+##### 同步
 
+```js
+const loaderUtils = require('loader-utils');
+module.exports = function (source) {
+  const options = loaderUtils.getOptions(this);
+  console.log(options);
+  source += options.message;
+  // 可以传递更详细的信息
+  this.callback(null, source);
+};
+```
+
+##### 异步
+
+```js
+const loaderUtils = require('loader-utils');
+module.exports = function (source) {
+  const options = loaderUtils.getOptions(this);
+  const asyncfunc = this.async();
+  setTimeout(() => {
+    source += '走上人生颠覆';
+    asyncfunc(null, res);
+  }, 200);
+};
 ```
