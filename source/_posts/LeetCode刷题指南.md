@@ -1,4 +1,4 @@
-### LeetCode 刷题指南
+### LeetCode 刷题指南 - 每天两题
 
 [刷题顺序](https://blog.csdn.net/weixin_50920119/article/details/123471385)
 
