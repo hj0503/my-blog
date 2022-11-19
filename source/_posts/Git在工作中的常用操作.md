@@ -8,4 +8,6 @@ categories: Git
 
 ### 记录Git在工作中的常用操作
 
-1. 
+1. 回退操作
+
+git reset
