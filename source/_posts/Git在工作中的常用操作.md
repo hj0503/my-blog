@@ -10,4 +10,5 @@ categories: Git
 
 1. 回退操作
 
-git reset
+git reset --soft
+git reset --hard
