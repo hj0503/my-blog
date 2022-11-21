@@ -10,5 +10,7 @@ categories: Git
 
 1. 回退操作
 
-git reset --soft
-git reset --hard
+```js
+git reset --soft  // 保留代码
+git reset --hard  // 不保留代码
+```
