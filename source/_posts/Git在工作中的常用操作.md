@@ -14,3 +14,9 @@ categories: Git
 git reset --soft  // 保留代码
 git reset --hard  // 不保留代码
 ```
+
+2. 修改某个commit的内容
+
+```js
+git rebase -i commit-id
+```
