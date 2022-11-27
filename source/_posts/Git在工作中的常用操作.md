@@ -17,6 +17,8 @@ git reset --soft commitId  // 保留代码
 git reset --hard commitId  // 不保留代码
 ```
 
+回退具体操作流程以及场景
+
 回退操作
 ```js
 git reflog // 查看操作id
