@@ -6,3 +6,7 @@ tags:
 categories: 前端
 cover: ../images/Vite.jpeg
 ---
+
+### 所用技术
+
+canvas + html2canvas + file-saver
