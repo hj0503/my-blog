@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 268421360
+      // 47518560
+      const canvas = document.createElement('canvas');
+      canvas.width = 4096;
+      canvas.height = 65535;
+      // let width = 1;
+      // let height = 65500;
+      // for (let i = 65500; i < 65600; i++) {
+      //   height = height + 1;
+      //   canvas.height = height;
+      //   const url = canvas.toDataURL();
+      //   if (url.length < 10) {
+      //     console.log('111111', height)
+      //     break
+      //   }
+      // }
+      const ctx = canvas.getContext('2d');
+      canvas.toBlob(blob => {
+        console.log('bbbb', blob);
+      });
+    </script>
+  </body>
+</html>
