@@ -59,12 +59,13 @@ mergeCanvas(canvasList) {
 
 ##### canvas 过大无法生成下载
 
-google浏览器：
+google浏览器:
 
 最大宽度: 65535
 最大高度：65535
 最大面积：65535 \* 4096
 
+IE浏览器:
 ##### 其他注意地方
 
 1. 开启了 canvas 动画需要等待动画结束后再开始生成 canvans
