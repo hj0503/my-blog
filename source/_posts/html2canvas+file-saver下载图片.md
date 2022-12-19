@@ -70,7 +70,7 @@ google浏览器:
 1. 开启了 canvas 动画需要等待动画结束后再开始生成 canvans
 
 ```js
-// 任何动画结束都会调用该方法
+// 任何动画结束都会调用该方法 考虑其他办法判断是否完成绘制echarts
 chart.on('finished', function () {
   // ...
 });
