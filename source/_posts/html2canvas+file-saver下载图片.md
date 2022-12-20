@@ -11,6 +11,9 @@ cover: ../images/Vite.jpeg
 
 html2canvas + file-saver
 
+- html2canvas: 将html转成canvas
+- file-saver: 文件下载
+
 ### 需求
 
 下载洞察报告，最多 200 个字段，200 个 echarts 图表，原页面由于性能问题使用了虚拟滚动
