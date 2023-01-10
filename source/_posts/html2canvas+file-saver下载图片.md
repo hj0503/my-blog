@@ -2,14 +2,17 @@
 title: html2canvas+file-saver下载图片
 date: 2022-12-1 23:01:01
 tags:
-  - 前端
+  - 解决方案
 categories: 前端
 cover: ../images/Vite.jpeg
 ---
 
 ### 所用技术
 
-canvas + html2canvas + file-saver
+html2canvas + file-saver
+
+- html2canvas: 将 html 转成 canvas
+- file-saver: 文件下载
 
 ### 需求
 
@@ -21,7 +24,7 @@ canvas + html2canvas + file-saver
 
 - 不能使用虚拟滚动
 - 全量展示下载卡顿严重
-- g-empty 图片无法下载
+- g-empty 图片无法正确下载
 - canvas 过大无法生成下载
 
 ##### 全量展示下载卡顿问题
@@ -52,11 +55,14 @@ mergeCanvas(canvasList) {
 
 首先合并所有字段的 canvas，再合并整个页面的 canvas
 
-##### g-empty 图片无法下载
+##### g-empty 图片无法下载(未完全解决)
 
-未解决
+图片截取不完整(好像是只能下载原始图片大小)，需要等待图片加载完成后再截取
+先转成 base64 后再生成 canvas
 
 ##### canvas 过大无法生成下载
+
+google 浏览器:
 
 最大宽度: 65535
 最大高度：65535
@@ -67,6 +73,7 @@ mergeCanvas(canvasList) {
 1. 开启了 canvas 动画需要等待动画结束后再开始生成 canvans
 
 ```js
+// 任何动画结束都会调用该方法 考虑其他办法判断是否完成绘制echarts
 chart.on('finished', function () {
   // ...
 });
