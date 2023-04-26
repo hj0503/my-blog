@@ -1,5 +1,7 @@
 ### diff 算法
 
+diff 算法：通过对比新旧节点进行`添加`、`删除`、`打补丁`、`移动`四个行为来完成节点的更新
+
 #### 源码地址
 
 `packages/runtime-core/src/renderer.ts`里面的`patchKeyedChildren`函数
