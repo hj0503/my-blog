@@ -23,6 +23,26 @@ diff 算法：通过对比新旧节点进行`添加`、`删除`、`打补丁`、
 
 ##### 1. 同步头部节点
 
+旧节点:
+```js
+<ul>
+  <li key="a">a</li>
+  <li key="b">b</li>
+  <li key="b">e</li>
+  <li key="c">c</li>
+  <li key="d">d</li>
+</ul>
+```
+新节点:
+```js
+<ul>
+  <li key="a">a</li>
+  <li key="b">b</li>
+  <li key="c">c</li>
+  <li key="d">d</li>
+</ul>
+```
+
 ##### 2. 同步尾部节点
 
 ##### 3. 添加新的节点
