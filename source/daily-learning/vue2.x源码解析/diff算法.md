@@ -54,3 +54,8 @@ if (oldStartIdx > oldEndIdx) {
   removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
 }
 ```
+
+#### 参考文献
+
+[Vue2.0 和 Vue3.0 Dom Diff 对比](https://blog.csdn.net/qq_34629352/article/details/122163072)
+[vue 中的 diff 算法](https://blog.csdn.net/weixin_43638968/article/details/112686317)
