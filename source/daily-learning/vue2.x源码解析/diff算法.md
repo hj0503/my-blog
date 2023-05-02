@@ -24,10 +24,33 @@
 
 #### updateChildren
 
+while 循环进行判断:
+
 - 当新老 `VNode` 节点的 `start` 相同时，直接 `patchVnode` ，同时新老 `VNode` 节点的开始索引都加 1
 - 当新老 `VNode` 节点的 `end` 相同时，同样直接 `patchVnode` ，同时新老 `VNode` 节点的结束索引都减 1
 - 当老 `VNode` 节点的 `start` 和新 `VNode` 节点的 `end` 相同时，这时候在 `patchVnode` 后，还需要将当前真实 `dom` 节点移动到 - `oldEndVnode` 的后面，同时老 `VNode` 节点开始索引加 1，新 `VNode` 节点的结束索引减 1
 - 当老 `VNode` 节点的 `end` 和新 `VNode` 节点的 start 相同时，这时候在 `patchVnode` 后，还需要将当前真实 `dom` 节点移动到 - `oldStartVnode` 的前面，同时老 `VNode` 节点结束索引减 1，新 `VNode` 节点的开始索引加 1
-- 如果都不满足以上四种情形，那说明没有相同的节点可以复用，则会分为以下两种情况：
-- 从旧的 `VNode` 为 `key` 值，对应 `index` 序列为 `value` 值的哈希表中找到与 `newStartVnode` 一致 `key` 的旧的 VNode 节点，再进- 行 `patchVnode，同时` 将这个真实 `dom` 移动到 `oldStartVnode` 对应的真实 `dom` 的前面
-- 调用 `createElm` 创建一个新的 `dom` 节点放到当前 `newStartIdx` 的位置
+
+如果都不满足以上四种情形，那说明没有相同的节点可以复用，则会进行下面的步骤
+
+- 遍历旧的一组子节点，尝试找出与新的一组子节点的头部节点具有相同`key`值的节点(`idxInOld`)
+- 如果 `idxInOld`不存在，说明`newStartVnode`为新节点，新建
+- 如果 `idxInOld`存在，比较具有相同`key`新旧节点是否为相同节点，如果相同则进行`patch`和移动，如果`key`相同节点不同则新建节点
+
+循环结束后发现还有节点进行新增或者删除节点多余节点操作
+
+```js
+if (oldStartIdx > oldEndIdx) {
+  refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
+  addVnodes(
+    parentElm,
+    refElm,
+    newCh,
+    newStartIdx,
+    newEndIdx,
+    insertedVnodeQueue
+  );
+} else if (newStartIdx > newEndIdx) {
+  removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+}
+```
