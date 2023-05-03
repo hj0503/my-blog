@@ -60,3 +60,4 @@ if (oldStartIdx > oldEndIdx) {
 [Vue2.0 和 Vue3.0 Dom Diff 对比](https://blog.csdn.net/qq_34629352/article/details/122163072)
 [vue 中的 diff 算法](https://blog.csdn.net/weixin_43638968/article/details/112686317)
 [为什么 Vue 中不要用 index 作为 key](https://juejin.cn/post/6844904113587634184#heading-9)
+[在 Vue 中为什么不推荐用 index 做 key](https://juejin.cn/post/7026119446162997261#heading-10)
