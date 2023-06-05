@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const data = [
+        { value: 2, sortable: true },
+        { value: 0, sortable: false },
+        { value: 3, sortable: false },
+        { value: 8, sortable: true },
+        { value: 7, sortable: true },
+      ];
+      const test = data.sort((a, b) => {
+        console.log('aaaaa', a, b);
+        return !a.sortable || !b.sortable
+          ? b.value - a.value
+          : a.value - b.value;
+      });
+      console.log('111111', test);
+    </script>
+  </body>
+</html>
