@@ -13,7 +13,7 @@ Function.prototype.call = function (obj, ...args) {
 
 ### apply
 
-和call唯一的区别是apply接受一个数组参数，apply接受不定量的参数
+和call唯一的区别是apply接受一个数组参数，call接受不定量的参数
 
 ```js
 Function.prototype.apply = function (obj, args = []) {
