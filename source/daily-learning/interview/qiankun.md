@@ -120,3 +120,4 @@ qiankun 架构下的子应用通过 webpack 的 umd 输出格式来做，让父�
 [微前端 single-spa 原理学习](https://www.cnblogs.com/synY/p/13958963.html)
 [legacySandbox 沙箱方案](https://zhuanlan.zhihu.com/p/658452336)
 [hashchange 和 popstate 事件触发条件](https://blog.csdn.net/weixin_43856422/article/details/128287051)
+[深入调研了微前端，还是 iframe 最香](https://juejin.cn/post/7244070072788287544?searchId=202412021438521D8E7092AB7DA3D2BD8D)
