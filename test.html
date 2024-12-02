@@ -4,11 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      .animated-element {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        position: relative;
+        animation: enterAndFade 5s forwards;
+      }
+
+      @keyframes enterAndFade {
+        0% {
+          left: -200px;
+        }
+
+        100% {
+          left: 100px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <script>
-      const a = [];
-      console.log(a instanceof Object);
-    </script>
+    <div class="animated-element"></div>
   </body>
 </html>
