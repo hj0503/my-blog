@@ -84,3 +84,8 @@ function createArrayInstrumentations() {
   return instrumentations
 }
 ```
+
+#### 参考
+
+1. [Vue3源码解析之 reactive](https://juejin.cn/post/7303594200809783359?searchId=2025120311020957A2406079D43559FEB6)
+2. [手写简单vue3响应式原理](https://juejin.cn/post/7134281691295645732?searchId=202512031054293C24F56C1CA6EB370D05)
