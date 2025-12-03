@@ -2,9 +2,15 @@
 
 #### 组件初始化
 
+组件挂载时会执行 mountComponent 函数，该函数里面会设置并执行带副作用的渲染函数 setupRenderEffect，该函数会触发组件的首次渲染，渲染时如果用到了响应式数据则进行依赖收集: const effect = new ReactiveEffect(componentUpdateFn)
+
 调用 ReactiveEffect 并且执行 effect.run 触发组件的首次渲染，run 函数执行时会把全局 activeEffect = this(当前的 reactiveEffect)。组件渲染时如果用到了响应式数据则进行依赖收集
 
 #### reactive
+
+reactive 函数会返回一个代理对象，当访问代理对象的属性时会触发 get 拦截器，当设置代理对象的属性时会触发 set 拦截器
+
+依赖收集的数据结构为: `targetMap: WeakMap<target, Map<key, Set<effect>>>`，其中 target 是响应式对象，key 是属性名，effect 是副作用函数（组件渲染函数）
 
 1. 派发更新
 
@@ -23,7 +29,7 @@ function triggerEffect(
 }
 ```
 
-注意项：
+##### 注意项：
 
 1. 分支切换与 cleanup
 
@@ -85,7 +91,47 @@ function createArrayInstrumentations() {
 }
 ```
 
+#### ref
+
+```js
+class RefImpl<T> {
+  private _value: T
+  private _rawValue: T
+
+  public dep?: Dep = undefined
+  public readonly __v_isRef = true
+
+  constructor(value: T, public readonly __v_isShallow: boolean) {
+    this._rawValue = __v_isShallow ? value : toRaw(value)
+    this._value = __v_isShallow ? value : toReactive(value) // value为对象时，需要处理成reactive
+  }
+
+  get value() {
+    trackRefValue(this) // ref中的相关依赖直接保存到ref中的dep属性上
+    return this._value
+  }
+
+  set value(newVal) {
+    const useDirectValue =
+      this.__v_isShallow || isShallow(newVal) || isReadonly(newVal)
+    newVal = useDirectValue ? newVal : toRaw(newVal)
+    if (hasChanged(newVal, this._rawValue)) {
+      this._rawValue = newVal
+      this._value = useDirectValue ? newVal : toReactive(newVal)
+      triggerRefValue(this, newVal)
+    }
+  }
+}
+```
+
+#### 和 vue2 的响应式原理有什么区别
+
+1. vue2 是基于 Object.defineProperty 实现的响应式，vue3 是基于 Proxy 实现的响应式
+2. vue2 只能监听对象的属性，不能监听数组的变化，vue3 可以监听数组的变化
+3. vue2 中需要通过 $set 或 $delete 才能监听数组的变化，vue3 中不需要
+4. vue3 中只有在在对象属性被访问的时候才会判断子属性的类型，来决定要不要递归执行 reactive
+
 #### 参考
 
-1. [Vue3源码解析之 reactive](https://juejin.cn/post/7303594200809783359?searchId=2025120311020957A2406079D43559FEB6)
-2. [手写简单vue3响应式原理](https://juejin.cn/post/7134281691295645732?searchId=202512031054293C24F56C1CA6EB370D05)
+1. [Vue3 源码解析之 reactive](https://juejin.cn/post/7303594200809783359?searchId=2025120311020957A2406079D43559FEB6)
+2. [手写简单 vue3 响应式原理](https://juejin.cn/post/7134281691295645732?searchId=202512031054293C24F56C1CA6EB370D05)
